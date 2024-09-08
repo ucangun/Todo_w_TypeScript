@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "./App.css";
 import Header from "./components/Header";
@@ -11,8 +11,20 @@ export type Todo = {
   isCompleted: boolean;
 };
 
-function App() {
-  const [todos, setTodos] = useState<Todo[]>([]);
+const App: React.FC = () => {
+  const getStoredTodos = (): Todo[] => {
+    const storedTodos = localStorage.getItem("todos");
+    if (storedTodos) {
+      return JSON.parse(storedTodos) as Todo[];
+    }
+    return [];
+  };
+
+  const [todos, setTodos] = useState<Todo[]>(getStoredTodos);
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   return (
     <div>
@@ -23,6 +35,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
 export default App;
