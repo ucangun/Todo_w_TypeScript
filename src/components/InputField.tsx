@@ -3,7 +3,7 @@ import { Todo } from "../App";
 
 export type TodosProps = {
   todos: Todo[];
-  setTodos: (todos: Todo[]) => void;
+  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
 };
 
 const InputField: React.FC<TodosProps> = ({ todos, setTodos }) => {
@@ -11,7 +11,7 @@ const InputField: React.FC<TodosProps> = ({ todos, setTodos }) => {
 
   const addTodo = () => {
     const newTodo: Todo = {
-      id: todos.length + 1,
+      id: Date.now(),
       text: input,
       isCompleted: false,
     };
